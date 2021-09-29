@@ -44,6 +44,9 @@
   file:
     path: /home/{{ xibo_user }}/.config/autostart/
     state: directory
+    owner: "{{ xibo_user }}"
+    group: "{{ xibo_user }}"
+    mode: 0755
 
 - name: Configure Xibo autostart
   template:
