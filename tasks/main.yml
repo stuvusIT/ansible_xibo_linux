@@ -1,7 +1,7 @@
 ---
 - name: Create xibo user
   user:
-    name: {{ xibo_user }}
+    name: "{{ xibo_user }}"
 
 - name: Configure autologin
   template:
@@ -44,8 +44,8 @@
   template:
     src: xibo.desktop
     dest: /home/{{ xibo_user }}/.config/autostart/xibo.desktop
-    owner: {{ xibo_user }}
-    group: {{ xibo_user }}
+    owner: "{{ xibo_user }}"
+    group: "{{ xibo_user }}"
     mode: 0777
 
 - name: Create Xibo resources directory
