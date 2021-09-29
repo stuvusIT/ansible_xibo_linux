@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Start Xibo Player
+Comment=Start Xibo
+Exec=/snap/bin/xibo-player
+Terminal=false
+Type=Application

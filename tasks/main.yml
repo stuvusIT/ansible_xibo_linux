@@ -1,2 +1,60 @@
 ---
+- name: Create xibo user
+  user:
+    name: {{ xibo_user }}
+
+- name: Configure autologin
+  template:
+    src: lightdm.conf.j2
+    dest: /etc/lightdm/lightdm.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Ensure snapd is installed
+  apt:
+    name: snapd
+    state: present
+    update_cache: true
+  register: snapd
+
+- name: Ensure snap is started and enabled on boot
+  ansible.builtin.systemd:
+    enabled: true
+    name: snapd
+    state: started
+
+- name: Reload udev # noqa 503
+  ansible.builtin.service:
+    name: udev
+    state: restarted
+  when: snapd.changed
+
+- name: Ensure snap core is installed
+  community.general.snap:
+    name: core
+    state: present
+
+- name: Ensure snap xibo-player is installed
+  community.general.snap:
+    name: xibo-player
+    state: present
+
+- name: Configure Xibo autostart
+  template:
+    src: xibo.desktop
+    dest: /home/{{ xibo_user }}/.config/autostart/xibo.desktop
+    owner: {{ xibo_user }}
+    group: {{ xibo_user }}
+    mode: 0777
+
+- name: Create Xibo resources directory
+  file:
+    path: /home/{{ xibo_user }}/snap/xibo-player/common/resources
+    state: directory
+
+- name: Configure xibo player
+  template:
+    src: cmsSettings.xml.j2
+    dest: /home/{{ xibo_user }}/snap/xibo-player/common/cmsSettings.xml
 
