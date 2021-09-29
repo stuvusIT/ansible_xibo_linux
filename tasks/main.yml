@@ -40,6 +40,11 @@
     name: xibo-player
     state: present
 
+- name: Create autostart folder
+  file:
+    path: /home/{{ xibo_user }}/.config/autostart/
+    state: directory
+
 - name: Configure Xibo autostart
   template:
     src: xibo.desktop
