@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 [Desktop Entry]
 Name=Start Xibo Player
 Comment=Start Xibo
