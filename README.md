@@ -16,7 +16,7 @@ This role uses the following Variables:
 | ------------------ | :----------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `xibo_cms_address` | :heavy_check_mark: | The URL of your CMS installation, e.g `https://cms.example.org`.                                                                                                                                                                         |
 | `xibo_cms_key`     | :heavy_check_mark: | The CMS Key found under Settings in your CMS installation.                                                                                                                                                                               |
-| `xibo_display_id`  | :heavy_checkmark:  | The displayId is used as unique identifier of the display. It normally is generated as md5 cheksum of the cpuid and the mac address by xibo. In order for this role to work we need to substitute it with a random string in md5 format. |
+| `xibo_display_id`  | :heavy_check_mark: | The displayId is used as unique identifier of the display. It normally is generated as md5 cheksum of the cpuid and the mac address by xibo. In order for this role to work we need to substitute it with a random string in md5 format. |
 | `xibo_user`        |       `xibo`       | The name of the user which is created for autologin at startup.                                                                                                                                                                          |
 
 
