@@ -60,9 +60,15 @@
   file:
     path: /home/{{ xibo_user }}/snap/xibo-player/common/resources
     state: directory
+    owner: "{{ xibo_user }}"
+    group: "{{ xibo_user }}"
+    mode: 0755
 
 - name: Configure xibo player
   template:
     src: cmsSettings.xml.j2
     dest: /home/{{ xibo_user }}/snap/xibo-player/common/cmsSettings.xml
+    owner: "{{ xibo_user }}"
+    group: "{{ xibo_user }}"
+    mode: 0755
 
