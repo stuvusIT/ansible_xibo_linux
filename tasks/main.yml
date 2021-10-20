@@ -23,12 +23,7 @@
     enabled: true
     name: snapd
     state: started
-
-- name: Reload udev # noqa 503
-  ansible.builtin.service:
-    name: udev
-    state: restarted
-  when: snapd.changed
+  notify: Restart udev
 
 - name: Ensure snap core is installed
   community.general.snap:
@@ -50,7 +45,7 @@
 
 - name: Configure Xibo autostart
   template:
-    src: xibo.desktop
+    src: xibo.desktop.j2
     dest: /home/{{ xibo_user }}/.config/autostart/xibo.desktop
     owner: "{{ xibo_user }}"
     group: "{{ xibo_user }}"

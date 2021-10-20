@@ -1,0 +1,5 @@
+---
+- name: Restart udev
+  service:
+    name: udev
+    state: restarted
