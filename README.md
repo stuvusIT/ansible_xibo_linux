@@ -12,17 +12,17 @@ This role was developed on Debian Bullseye with XFCE as desktop environment. It 
 
 This role uses the following Variables:
 
-| Name               |  Required/Default  | Description                                                                                                                                                                                                                              |
-| ------------------ | :----------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `xibo_cms_address` | :heavy_check_mark: | The URL of your CMS installation, e.g `https://cms.example.org`.                                                                                                                                                                         |
-| `xibo_cms_key`     | :heavy_check_mark: | The CMS Key found under Settings in your CMS installation.                                                                                                                                                                               |
-| `xibo_display_id`  | :heavy_check_mark: | The displayId is used as unique identifier of the display. It normally is generated as md5 cheksum of the cpuid and the mac address by xibo. In order for this role to work we need to substitute it with a random string in md5 format. |
-| `xibo_user`        |       `xibo`       | The name of the user which is created for autologin at startup.                                                                                                                                                                          |
+| Name               |  Required/Default  | Description                                                                                      |
+| ------------------ | :----------------: | ------------------------------------------------------------------------------------------------ |
+| `xibo_cms_address` | :heavy_check_mark: | The URL of your CMS installation, e.g `https://cms.example.org`.                                 |
+| `xibo_cms_key`     | :heavy_check_mark: | The CMS Key found under Settings in your CMS installation.                                       |
+| `xibo_display_id`  | :heavy_check_mark: | The displayId is used as unique identifier of the display. Usually a random string is necessary. |
+| `xibo_user`        |       `xibo`       | The name of the user which is created for autologin at startup.                                  |
 
 
 ## Example
 
-The following example playbook assumes that you cloned this role to `roles/xibo_linux` (i.e. the name of the role is `kata_containers` instead of `ansible_kata_containers`).
+The following example playbook assumes that you cloned this role to `roles/xibo_linux` (i.e. the name of the role is `xibo_linux` instead of `ansible_xibo_linux`).
 
 ```yml
 - hosts: info01
