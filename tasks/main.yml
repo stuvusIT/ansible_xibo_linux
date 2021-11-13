@@ -11,6 +11,23 @@
     group: root
     mode: 0644
 
+- name: Disable human interface driver module
+  template:
+    src: usbhid.conf.j2
+    dest: /etc/modprobe.d/usbhid.conf
+    owner: root
+    group: root
+    mode: 0755
+  when: xibo_hid_module == "disabled"
+  notify: Configure initramfs
+
+- name: Enable human interface driver module
+  file:
+    path: /etc/modprobe.d/usbhid.conf
+    state: absent
+  when: xibo_hid_module == "enabled"
+  notify: Configure initramfs
+
 - name: Ensure snapd is installed
   apt:
     name: snapd

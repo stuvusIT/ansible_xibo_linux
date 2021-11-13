@@ -3,3 +3,7 @@
   service:
     name: udev
     state: restarted
+
+- name: Configure initramfs
+  shell:
+    cmd: depmod -ae && update-initramfs -u
