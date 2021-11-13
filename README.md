@@ -1,35 +1,36 @@
-# Role Name
+# xibo-linux
 
-This role installs and configures the xibo player for Linux.
+This role installs and configures the xibo player for Linux. Additionally it sets up automatic login of the `xibo_user` and autostart oft the player at startup.
 
 
 ## Requirements
 
-Debian Bullseye with xfce installed.
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here.
-For instance, if the role uses the EC2 module or depends on other Ansible roles, it may be a good idea to mention in this section that the boto package is required.
+This role was developed on Debian Bullseye with XFCE as desktop environment. It configures lightdm for autologin.
 
 
 ## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role.
-Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+This role uses the following Variables:
 
-Don't forget to indent the markdown table so it is readable even if not rendered.
-
-| Name       |     Required/Default     | Description                                                                                        |
-| ---------- | :----------------------: | -------------------------------------------------------------------------------------------------- |
-| `example1` |    :heavy_check_mark:    | Lorem ipsum dolor sit amet, consetetur sadipscing elitr,                                           |
-| `example2` | :heavy_multiplication_x: | Sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. |
-| `example3` |          `True`          | Stet clita kasd gubergren                                                                          |
-| `example4` |           `5`            | No sea takimata sanctus est Lorem ipsum dolor sit amet.                                            |
+| Name               |     Required/Default     | Description                                                                                     |
+| ------------------ | :----------------------: | ----------------------------------------------------------------------------------------------- |
+| `xibo_cms_address` |    :heavy_check_mark:    | The URL of your CMS installation, e.g `https://cms.example.org`.                                |
+| `xibo_cms_key`     |    :heavy_check_mark:    | The CMS Key found under Settings in your CMS installation.                                      |
+| `xibo_display_id`  | `{{ ansible_hostname }}` | The displayId is used as unique identifier of the display. Usually the hostname should be fine. |
+| `xibo_user`        |          `xibo`          | The name of the user which is created for autologin at startup.                                 |
 
 
 ## Example
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+The following example playbook assumes that you cloned this role to `roles/xibo_linux` (i.e. the name of the role is `xibo_linux` instead of `ansible_xibo_linux`).
 
 ```yml
+- hosts: info01
+  roles:
+    - role: xibo_linux
+        xibo_cms_address: https://cms.example.org
+        xibo_cms_key: cmsPrivateKey
+        xibo_display_id: cad25a9c24003050186ebbdc07e6dabf
 ```
 
 
@@ -40,4 +41,4 @@ This work is licensed under the [MIT License](./LICENSE).
 
 ## Author corecore
 
-- [Author Name (nickname)](github profile) _givenname.familyname at stuvus.uni-stuttgart.de_
+- [Sven Feyerabend (SF2311)](https://github.com/SF2311) _Sven.Feyerabend at stuvus.uni-stuttgart.de_

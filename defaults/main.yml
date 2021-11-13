@@ -1,2 +1,3 @@
 ---
 xibo_user: xibo
+xibo_display_id: "{{ ansible_hostname }}"
