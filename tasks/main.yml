@@ -11,6 +11,15 @@
     group: root
     mode: 0644
 
+- name: Configure human interface driver module
+  template:
+    src: usbhid.conf.j2
+    dest: /etc/modprobe.d/usbhid.conf
+    owner: root
+    group: root
+    mode: 0755
+  notify: Configure initramfs
+
 - name: Ensure snapd is installed
   apt:
     name: snapd

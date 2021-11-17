@@ -1,0 +1,4 @@
+{{ ansible_managed }}
+{% if not xibo_enable_hid_module %}
+blacklist usbhid
+{% endif %}

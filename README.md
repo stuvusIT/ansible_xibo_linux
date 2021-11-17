@@ -12,12 +12,13 @@ This role was developed on Debian Bullseye with XFCE as desktop environment. It 
 
 This role uses the following Variables:
 
-| Name               |     Required/Default     | Description                                                                                     |
-| ------------------ | :----------------------: | ----------------------------------------------------------------------------------------------- |
-| `xibo_cms_address` |    :heavy_check_mark:    | The URL of your CMS installation, e.g `https://cms.example.org`.                                |
-| `xibo_cms_key`     |    :heavy_check_mark:    | The CMS Key found under Settings in your CMS installation.                                      |
-| `xibo_display_id`  | `{{ ansible_hostname }}` | The displayId is used as unique identifier of the display. Usually the hostname should be fine. |
-| `xibo_user`        |          `xibo`          | The name of the user which is created for autologin at startup.                                 |
+| Name                     |     Required/Default     | Description                                                                                                                                           |
+| ------------------------ | :----------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `xibo_cms_address`       |    :heavy_check_mark:    | The URL of your CMS installation, e.g `https://cms.example.org`.                                                                                      |
+| `xibo_cms_key`           |    :heavy_check_mark:    | The CMS Key found under Settings in your CMS installation.                                                                                            |
+| `xibo_display_id`        | `{{ ansible_hostname }}` | The displayId is used as unique identifier of the display. Usually the hostname should be fine.                                                       |
+| `xibo_user`              |          `xibo`          | The name of the user which is created for autologin at startup.                                                                                       |
+| `xibo_enable_hid_module` |         `False`          | If set to `False` the usbhid module is blacklisted which disables mouse and keyboard input over usb.<br>Set to `True` in order to reenable the module |
 
 
 ## Example
