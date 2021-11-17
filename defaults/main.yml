@@ -1,4 +1,4 @@
 ---
 xibo_user: xibo
 xibo_display_id: "{{ ansible_hostname }}"
-xibo_hid_module: disabled
+xibo_enable_hid_module: False
