@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Socket for xorg at display 0
+
+[Socket]
+ListenStream=/tmp/.X11-unix/X0
+
+[Install]
+WantedBy=sockets.target

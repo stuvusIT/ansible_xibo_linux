@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+# This rule stops xorg.service whenever a monitor is hotplugged.
+# If there's an application accessing the X server, then xorg.service will
+# automatically restart and use a connected monitor.
+KERNEL=="card0", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", RUN+="/usr/bin/systemctl stop xorg"

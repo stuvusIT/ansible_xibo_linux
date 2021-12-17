@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+{% set uid = getent_passwd[xibo_linux_user].1 %}
+[Unit]
+Description=Xibo Linux player
+# This ensures that the user has a login session, which is required for using D-Bus
+BindsTo=user@{{ uid }}.service
+After=user@{{ uid }}.service
+
+[Service]
+ExecStart=/snap/bin/xibo-player
+User={{ xibo_linux_user }}
+Environment="DISPLAY=:0"
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

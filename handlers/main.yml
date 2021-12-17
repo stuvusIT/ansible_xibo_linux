@@ -1,5 +1,14 @@
 ---
-- name: Restart udev
+- name: Reload systemd configuration
   service:
-    name: udev
+    daemon_reload: True
+
+- name: Reload udev rules
+  command:
+    cmd: udevadm control --reload-rules
+
+- name: Restart xibo-linux service
+  service:
+    name: xibo-linux
+    enabled: true
     state: restarted

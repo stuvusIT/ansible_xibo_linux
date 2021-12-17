@@ -1,3 +1,4 @@
 ---
-xibo_user: xibo
-xibo_display_id: "{{ ansible_hostname }}"
+xibo_linux_user: xibo
+xibo_linux_display_id: "{{ ansible_hostname }}"
+xibo_linux_virtual_terminal: 2

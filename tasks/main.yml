@@ -1,69 +1,85 @@
 ---
 - name: Create xibo user
   user:
-    name: "{{ xibo_user }}"
+    name: "{{ xibo_linux_user }}"
 
-- name: Configure autologin
-  template:
-    src: lightdm.conf.j2
-    dest: /etc/lightdm/lightdm.conf
-    owner: root
-    group: root
-    mode: 0644
+- name: Get UIDs
+  getent:
+    database: passwd # This registers the variable getent_passwd used in our template
 
-- name: Ensure snapd is installed
+- name: Install required apt packages
   apt:
-    name: snapd
-    state: present
-    update_cache: true
-  register: snapd
+    name:
+      - dbus-user-session
+      - snapd
+      - xorg
 
-- name: Ensure snap is started and enabled on boot
-  ansible.builtin.systemd:
-    enabled: true
-    name: snapd
-    state: started
-  notify: Restart udev
-
-- name: Ensure snap core is installed
+- name: Install required snap packages
   community.general.snap:
-    name: core
-    state: present
+    name:
+      - core
+      - xibo-player
 
-- name: Ensure snap xibo-player is installed
-  community.general.snap:
-    name: xibo-player
-    state: present
-
-- name: Create autostart folder
-  file:
-    path: /home/{{ xibo_user }}/.config/autostart/
-    state: directory
-    owner: "{{ xibo_user }}"
-    group: "{{ xibo_user }}"
-    mode: 0755
-
-- name: Configure Xibo autostart
+- name: Create xorg socket
   template:
-    src: xibo.desktop.j2
-    dest: /home/{{ xibo_user }}/.config/autostart/xibo.desktop
-    owner: "{{ xibo_user }}"
-    group: "{{ xibo_user }}"
-    mode: 0777
+    src: xorg.socket.j2
+    dest: /etc/systemd/system/xorg.socket
+  notify:
+    - Reload systemd configuration
+    - Restart xibo-linux service
+
+- name: Create xorg service
+  template:
+    src: xorg.service.j2
+    dest: /etc/systemd/system/xorg.service
+  notify:
+    - Reload systemd configuration
+
+- name: Create xibo-linux service
+  template:
+    src: xibo-linux.service.j2
+    dest: /etc/systemd/system/xibo-linux.service
+  notify:
+    - Reload systemd configuration
+    - Restart xibo-linux service
+
+- name: Create udev rule for monitor hotplug
+  template:
+    src: monitor-hotplug.rules.j2
+    dest: /etc/udev/rules.d/95-xibo-linux-monitor-hotplug.rules
+  notify:
+    - Reload udev rules
 
 - name: Create Xibo resources directory
   file:
-    path: /home/{{ xibo_user }}/snap/xibo-player/common/resources
+    path: /home/{{ xibo_linux_user }}/snap/xibo-player/common/resources
     state: directory
-    owner: "{{ xibo_user }}"
-    group: "{{ xibo_user }}"
+    owner: "{{ xibo_linux_user }}"
+    group: "{{ xibo_linux_user }}"
     mode: 0755
+  notify:
+    - Restart xibo-linux service
 
-- name: Configure xibo player
+- name: Configure Xibo Linux player
   template:
     src: cmsSettings.xml.j2
-    dest: /home/{{ xibo_user }}/snap/xibo-player/common/cmsSettings.xml
-    owner: "{{ xibo_user }}"
-    group: "{{ xibo_user }}"
-    mode: 0755
+    dest: /home/{{ xibo_linux_user }}/snap/xibo-player/common/cmsSettings.xml
+    owner: "{{ xibo_linux_user }}"
+    group: "{{ xibo_linux_user }}"
+    mode: 0644
+  notify:
+    - Restart xibo-linux service
 
+- name: Enable xorg socket
+  systemd:
+    name: xorg.socket
+    enabled: True
+    state: started
+
+- meta: flush_handlers
+
+- name: Enable xibo-linux service
+  systemd:
+    name: xibo-linux.service
+    enabled: True
+    state: started

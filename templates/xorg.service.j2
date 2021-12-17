@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Xorg server at display 0
+
+Requires=xorg.socket
+After=xorg.socket
+
+[Service]
+Type=simple
+SuccessExitStatus=0 1
+ExecStart=/usr/bin/Xorg :0 -nolisten tcp -noreset -s 0 -verbose 2 "vt{{ xibo_linux_virtual_terminal }}"
