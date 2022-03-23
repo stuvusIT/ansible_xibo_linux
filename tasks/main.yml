@@ -43,6 +43,20 @@
     - Reload systemd configuration
     - Restart xibo-linux service
 
+- name: Create restart-xibo service
+  template:
+    src: restart-xibo.service.j2
+    dest: /etc/systemd/system/restart-xibo.service
+  notify:
+    - Reload systemd configuration
+
+- name: Create restart-xibo timer
+  template:
+    src: restart-xibo.timer.j2
+    dest: /etc/systemd/system/restart-xibo.timer
+  notify:
+    - Reload systemd configuration
+
 - name: Create udev rule for monitor hotplug
   template:
     src: monitor-hotplug.rules.j2
@@ -81,5 +95,11 @@
 - name: Enable xibo-linux service
   systemd:
     name: xibo-linux.service
+    enabled: True
+    state: started
+
+- name: Enable restart-xibo timer
+  systemd:
+    name: restart-xibo.timer
     enabled: True
     state: started

@@ -1,0 +1,6 @@
+[Unit]
+Description=Restart xibo-linux service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl try-restart xibo-linux.service
